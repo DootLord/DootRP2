@@ -36,7 +36,7 @@ end
 
 RegisterNetEvent('hospital:client:UseIfaks', function()
     local ped = PlayerPedId()
-    QBCore.Functions.Progressbar("use_bandage", Lang:t('progress.ifaks'), 3000, false, true, {
+    QBCore.Functions.Progressbar("use_bandage", Lang:t('progress.ifaks'), 10000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
 		disableMouse = false,
@@ -49,14 +49,18 @@ RegisterNetEvent('hospital:client:UseIfaks', function()
         StopAnimTask(ped, "mp_suicide", "pill", 1.0)
         TriggerServerEvent("hospital:server:removeIfaks")
         TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["ifaks"], "remove")
-        TriggerServerEvent('hud:server:RelieveStress', math.random(12, 24))
-        SetEntityHealth(ped, GetEntityHealth(ped) + 10)
+        -- TriggerServerEvent('hud:server:RelieveStress', math.random(12, 24))
+        SetEntityHealth(ped, GetEntityHealth(ped) + 50)
         if painkillerAmount < 3 then
             painkillerAmount = painkillerAmount + 1
         end
         PainKillerLoop()
-        if math.random(1, 100) < 50 then
-            RemoveBleed(1)
+        -- IFaks have a 80% chance to restore all injuries.
+        if math.random(1, 100) < 80 then --TODO: Have skills effect success rate
+            resetPartial()
+            QBCore.Functions.Notify("Fully Healed!")
+        else 
+            QBCore.Functions.Notify("Failed to Patch Injuries")
         end
     end, function() -- Cancel
         StopAnimTask(ped, "mp_suicide", "pill", 1.0)
@@ -79,10 +83,8 @@ RegisterNetEvent('hospital:client:UseBandage', function()
         StopAnimTask(ped, "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
         TriggerServerEvent("hospital:server:removeBandage")
         TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["bandage"], "remove")
-        SetEntityHealth(ped, GetEntityHealth(ped) + 10)
-        if math.random(1, 100) < 50 then
-            RemoveBleed(1)
-        end
+        SetEntityHealth(ped, GetEntityHealth(ped) + math.random(10, 25))
+        RemoveBleed(1)
         if math.random(1, 100) < 7 then
             ResetPartial()
         end

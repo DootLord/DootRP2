@@ -30,49 +30,23 @@ function GetClosestNPC(coords)
 	return closestPed, closestDist
 end
 
-RegisterNetEvent('ds-butcher:client:startButcher', function()
-    
+RegisterNetEvent('ds-butcher:client:startButcher', function()    
     local animDict = "timetable@gardener@clean_pool@";
     local animName = "base_gardener"
     local ped = PlayerPedId()
     local closestPed = GetClosestNPC()
-    print(closestPed);
-    print(GetPedType(closestPed));
-    if(closestPed == -1) then
+
+    if(closestPed == -1 or GetPedType(closestPed) ~= 28) then
         QBCore.Functions.Notify("No Dead Animal Found!", 'error')
         return;
     end
-    QBCore.Functions.Notify("Attempting to Butcher!")
+    
     TriggerServerEvent('ds-butcher:server:butcherAnimal')
     DeletePed(GetClosestNPC());
+end)
 
-    if(searching == false) then
-        searching = true;
-        QBCore.Functions.Progressbar("searching_area", "Searching Area", 2500, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function() -- Done
-            TriggerServerEvent('ds-search:server:getSearchResult')
-            searching = false
-            TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-        end, function() -- Cancel
-            searching = false
-            TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-        end)
-
-        CreateThread(function()
-            while searching do
-                loadAnimDict(animDict)
-                TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
-                Wait(2500)
-            end
-        end)
-
-    else
-        QBCore.Functions.Notify("Already Searching!", 'error')
-    end
+RegisterNetEvent('ds-butcher:client:butcherEnd', function(num)
+    QBCore.Functions.Notify("You butchered " .. num .. " meat!")
 end)
 
 

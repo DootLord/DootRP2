@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'DS-NPCLoot'
+description 'DS-SearchArea'
 version '1.0.0'
 
 shared_scripts{
@@ -15,12 +15,12 @@ client_scripts{
     '@PolyZone/client.lua',
     '@PolyZone/BoxZone.lua',
     '@PolyZone/ComboZone.lua',
-    'client/npcloot.lua',
+    'client/client.lua',
 }
 
 server_scripts{
     '@oxmysql/lib/MySQL.lua',
-    'server/npcloot.lua',
+    'server/server.lua',
 }
 
 lua54 'yes'

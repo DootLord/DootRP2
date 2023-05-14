@@ -133,7 +133,7 @@ end)
 
 RegisterNetEvent('hospital:client:CanHelp', function(helperId)
     if InLaststand then
-        if LaststandTime <= 300 then
+        if LaststandTime <= 350 then
             TriggerServerEvent('hospital:server:CanHelp', helperId, true)
         else
             TriggerServerEvent('hospital:server:CanHelp', helperId, false)
