@@ -56,7 +56,7 @@ RegisterNetEvent('hospital:client:UseIfaks', function()
         end
         PainKillerLoop()
         -- IFaks have a 80% chance to restore all injuries.
-        if math.random(1, 100) < 80 then --TODO: Have skills effect success rate
+        if math.random(1, 100) < 75 then --TODO: Have skills effect success rate
             resetPartial()
             QBCore.Functions.Notify("Fully Healed!")
         else 
