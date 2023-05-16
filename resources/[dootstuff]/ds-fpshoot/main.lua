@@ -6,8 +6,7 @@ if Config.NonVehicle then
         while true do
             sleep = 1000
             local _, weapon = GetCurrentPedWeapon(PlayerPedId())
-            local unarmed = `WEAPON_UNARMED`
-            if weapon == unarmed then
+            if weapon == `WEAPON_UNARMED` or weapon == `WEAPON_FLASHLIGHT` then
                 sleep = 1000
             else
                 sleep = 1
