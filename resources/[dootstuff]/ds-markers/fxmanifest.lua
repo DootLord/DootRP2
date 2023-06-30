@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'DS-Miner'
+description 'DS-Markers. Used with qb-core to give players a marker to interact with.'
 version '1.0.0'
 
 shared_scripts{
@@ -9,11 +9,11 @@ shared_scripts{
 }
 
 client_scripts{
-    'client/main.lua',
+    'client.lua'
 }
 
 server_scripts{
-    'server/main.lua',
+    'config.lua',
 }
 
 lua54 'yes'

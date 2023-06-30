@@ -5,7 +5,7 @@ local Translations = {
         nobody_at_door = 'There is nobody at the door...'
     },
     success = {
-        receive_apart = 'You got a apartment',
+        receive_apart = 'You got an apartment',
         changed_apart = 'You moved apartments',
     },
     info = {

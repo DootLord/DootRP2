@@ -1043,7 +1043,7 @@ const vehHud = {
       this.showCircleB = data.showCircleB;
       if (data.seatbelt === true) {
         this.seatbelt = 1;
-        this.seatbeltColor = "transparent";
+        this.seatbeltColor = "#008000";
       } else {
         this.seatbelt = 0;
         this.seatbeltColor = "#FF5100";

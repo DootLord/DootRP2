@@ -1,0 +1,54 @@
+#main {
+    margin-top: 25vh;
+    height: 55vh;
+    background-color:#262729;
+    color:#e6e9ee;
+    overflow: hidden;
+}
+
+.title {
+    text-align: center;
+}
+
+.ldBar path.mainline {
+    stroke-width: 10;
+    stroke: #09f;
+    stroke-linecap: round;
+}
+
+.ldBar path.baseline {
+    stroke-width: 14;
+    stroke: #f1f2f3;
+    stroke-linecap: round;
+    filter: url(#custom-shadow);
+}
+
+.upperRow {
+    height:85%
+}
+
+.barContainer {
+    height:100%;
+}
+
+.ldBar-label {
+    display:none;
+}
+
+.textContainer {
+    background-color:#56595e;
+    height:100%;
+    padding: 0 !important;
+    border-radius: 10px;
+    color:white;
+    margin-top:3%;
+    /* margin:2%; */
+}
+
+#resourceSelector {
+    color:#e6e9ee;
+}
+
+#resourceSelector option {
+    color:#e6e9ee;
+}

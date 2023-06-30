@@ -103,6 +103,8 @@ local function setDivingLocation(divingLocation)
     currentDivingLocation.blip.label = labelBlip
     for k, v in pairs(Config.CoralLocations[currentDivingLocation.area].coords.Coral) do
         if Config.UseTarget then
+
+            
             exports['qb-target']:AddBoxZone('diving_coral_zone_'..k, v.coords, v.length, v.width, {
                 name = 'diving_coral_zone_'..k,
                 heading = v.heading,
@@ -129,6 +131,25 @@ local function setDivingLocation(divingLocation)
                 minZ = v.coords.z - 3,
                 maxZ = v.coords.z + 2
             })
+
+            -- Create markers for coral pickup areas 
+            -- TODO: Change this out for radius logic
+            Citizen.CreateThread(function()
+                while true do
+                    local sleep = 2500
+                    local ped = GetPlayerPed(-1)
+                    local pos = GetEntityCoords(ped)
+                    local dist = GetDistanceBetweenCoords(pos, v.coords.x, v.coords.y, v.coords.z, true)
+                    
+                    if dist < 200.0 then
+                        sleep = 0
+                        print("Drawing Markers")
+                        DrawMarker(0, v.coords.x, v.coords.y, v.coords.z , 0.0, 0.0, 0.0, 0.0, 0, 0.0, 2.0, 2.0, 2.0, 40, 200, 80, 100, false, true, 2, nil, nil, false)
+                    end
+            
+                    Citizen.Wait(sleep)
+                end
+            end)
             zones[k]:onPlayerInOut(function(inside)
                 if inside then
                     currentArea = k
