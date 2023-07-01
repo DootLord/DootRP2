@@ -14,6 +14,7 @@ client_scripts{
 
 server_scripts{
     'server/locations.lua',
+    'server/helper.lua',
 }
 
 lua54 'yes'

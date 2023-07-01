@@ -1,4 +1,5 @@
 QBCore = exports['qb-core']:GetCoreObject()
+local extractors = {}
 
 extractorReferences = {};
 -- Add Item Listener
@@ -9,24 +10,27 @@ end)
 
 -- Server Logic Listeners
 
-RegisterNetEvent('ds-extractors:server:placeExtractor', function()
+RegisterNetEvent("ds-extractors:server:placeExtractor", function(playerCoords, player)
+  print("Extractor Logic Server Triggered")
+
+  local player = QBCore.Functions.GetPlayer(source)
   local extractorModel = `p_oil_pjack_02_s`
-  print(extractorModel);
-  local Player = QBCore.Functions.GetPlayer(source)
+  local extractor = CreateObjectNoOffset(extractorModel, playerCoords.x, playerCoords.y, playerCoords.z, true)
+  table.insert(extractors, extractor);
+  local extractorId = exports["ds-core"]:uuid()
+  print("Extractor ID: " .. extractorId)
+  MySQL.insert('INSERT INTO extractor (id, x, y, z, max, resource, owner) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+    extractorId,
+    playerCoords.x,
+    playerCoords.y,
+    playerCoords.z,
+    100,
+    "copper",
+    player.PlayerData.citizenid
+  })
 
-  if not Player then print("No Player") return end
-
-  if not HasModelLoaded(extractorModel) then
-    RequestModel(extractorModel)
-    print("Requsting Model")
-    while not HasModelLoaded(extractorModel) do
-      Citizen.Wait(1)
-      print("waiting")
-    end
-  end
-
-  print("Creating Object")
-  local extractor = CreateObject(extractorModel, Player.PlayerData.coords.x, Player.PlayerData.coords.y, Player.PlayerData.coords.z, true, true, false)
-
-  
+  -- TODO: Check if this is consistant!
+  local lastId = MySQL.query.await("SELECT LAST_INSERT_ID() AS id")
+  print(lastId[1].id);
+  print(extractors);
 end)
